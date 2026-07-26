@@ -2,12 +2,17 @@ import requests
 from time import sleep as time_sleep
 from json import dumps as json_dumps
 from csv import reader as csv_reader, writer as csv_writer
+import logging
 
+# Настройка логирования
+logging.basicConfig(level=logging.INFO)
+logger = logging.getLogger(__name__)
 
 class AppMetricaLogsAPI:
 
     DEFAULT_TIMEOUT = 30
     DEFAULT_SLEEP_SEC = 30
+    BYTES_PER_GB = 1e9
 
     def __init__(self, application_id, access_token, cache_option=None):
         self.application_id = application_id
@@ -46,28 +51,29 @@ class AppMetricaLogsAPI:
         with open(filename, mode='w', encoding='utf-8') as file:
             file.write(response)
 
-        print(f'data saved to {filename}')
+        logger.info(f'data saved to {filename}')
 
     @staticmethod
     def response_content_to_csv(response_csv, filename):
         """
         Сохранение данных в csv формате
         """
-        response_csv = csv_reader(response_csv.decode('utf-8').splitlines(), delimiter='\t')
-        response_csv = [row for row in response_csv]
+        content_decoded = response_csv.decode('utf-8').splitlines()
+        content_reader = csv_reader(content_decoded, delimiter='\t')
+        content_list = [row for row in content_reader]
 
         with open(filename, mode='w', encoding='utf-8', newline='') as file:
             writer = csv_writer(file)
-            writer.writerows(response_csv)
+            writer.writerows(content_list)
 
-        print(f'data saved to {filename}')
+        logger.info(f'data saved to {filename}')
     
     def make_job(self, params, source, output_type='json', timeout=DEFAULT_TIMEOUT, sleep_sec=DEFAULT_SLEEP_SEC):
 
         for _ in range(100):
             result = self.get_logrequest(params=params, source=source, output_type=output_type, timeout=timeout)
             result_status_code = result.status_code
-            print(result_status_code)
+            logger.info(result_status_code)
 
             if result_status_code == 202:
                 time_sleep(sleep_sec)
@@ -82,7 +88,7 @@ class AppMetricaLogsAPI:
                 elif output_type == 'csv':
                     self.response_content_to_csv(result.content, filename)
                 else:
-                    print('result doesnt save to file')
+                    logger.error('Unsupported output type')
                 
             break
         

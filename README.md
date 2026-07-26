@@ -15,3 +15,10 @@
 
 # App Metrica Logs API
 - Документация: https://appmetrica.yandex.com/docs/en/mobile-api/logs/request-procedure
+
+## AppMetricaLogsAPI
+Класс `AppMetricaLogsAPI` предназначен для работы с Logs API AppMetrica. Он предоставляет методы для выполнения различных операций, таких как:
+- Получение логов.
+- Сохранение данных в JSON или CSV формате.
+
+Класс также включает методы для обработки ответов API и выполнения задач с задержкой.
