@@ -1,3 +1,17 @@
-# yandex-logs-api
-* Yandex Metrica Logs API: https://yandex.ru/dev/metrika/en/logs/practice/quick-start
-* App Metrica Logs API: https://appmetrica.yandex.com/docs/en/mobile-api/logs/request-procedure
+# Yandex Metrica Logs API 
+- Документация: https://yandex.ru/dev/metrika/en/logs/practice/quick-start
+
+## YandexMetricaLogsAPI
+Класс `YandexMetricaLogsAPI` предназначен для работы с Logs API Яндекс.Метрики. Он предоставляет методы для выполнения различных операций, таких как:
+- Получение списка запрошенных логов.
+- Проверка возможности выполнения запроса.
+- Запрос на подготовку логов.
+- Статус подготовки логов.
+- Скачивание готовых данных.
+- Очистка запрошенных логов.
+- Отмена еще не обработанного запроса логов.
+
+Класс также включает методы для обработки ответов API, сохранения данных в CSV формате и выполнения задач с задержкой.
+
+# App Metrica Logs API
+- Документация: https://appmetrica.yandex.com/docs/en/mobile-api/logs/request-procedure
